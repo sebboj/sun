@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 import ephem, pgeocode, pytz, timezonefinder
 
+
 # convert zip code single date
 def getSunInfoSingleZip(zip_code, day):
     nomi = pgeocode.Nominatim("us")
@@ -10,6 +11,7 @@ def getSunInfoSingleZip(zip_code, day):
     lon = location["longitude"]
     return getSunInfoSingle(lat, lon, day)
 
+
 # convert zip code for date range
 def getSunInfoRangeZip(zip_code, start, end):
     nomi = pgeocode.Nominatim("us")
@@ -18,6 +20,7 @@ def getSunInfoRangeZip(zip_code, start, end):
     lat = location["latitude"]
     lon = location["longitude"]
     return getSunInfoRange(lat, lon, start, end)
+
 
 # return array of format [date, sunrise, midday, sunset, total_hours]
 def getSunInfoSingle(lat, lon, day):
@@ -29,6 +32,7 @@ def getSunInfoSingle(lat, lon, day):
     total_hours, midday = findDayLengthAndMiddayHour(sunrise_time, sunset_time)
 
     return [day, sunrise_time, midday, sunset_time, total_hours]
+
 
 # return 2d array of [date, sunrise, midday, sunset, total_hours] for each date in range
 def getSunInfoRange(lat, lon, start_date, end_date):
@@ -49,6 +53,7 @@ def getSunInfoRange(lat, lon, start_date, end_date):
 
     return day_range
 
+
 # returns total hours of daylight and true midday given a sunrise and sunset
 def findDayLengthAndMiddayHour(sunrise, sunset):
     dt_rise = datetime.strptime(sunrise, "%H:%M")
@@ -60,6 +65,7 @@ def findDayLengthAndMiddayHour(sunrise, sunset):
     midday = (dt_rise + midday_hour).strftime("%H:%M")
 
     return [daylen, midday]
+
 
 # returns a the sunrise and sunset times for a given location in its respective timezone
 def get_sunrise_sunset(lat, lon, date):
@@ -77,6 +83,7 @@ def get_sunrise_sunset(lat, lon, date):
     dt = datetime.now()
 
     return sunrise.datetime() + timezone.utcoffset(dt), sunset.datetime() + timezone.utcoffset(dt)
+
 
 def getConsoleInput():
     response1 = input("Are you in the united states? (y/n): ").lower()
@@ -127,7 +134,5 @@ def getConsoleInput():
         print("peace be upon you")
 
 # getConsoleInput() # <---- (un)comment this line to toggle console input
-
-
 
 
